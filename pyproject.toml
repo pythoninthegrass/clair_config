@@ -1,0 +1,18 @@
+[project]
+name = "clair-config"
+version = "0.1.0"
+authors = [
+    { name = "pythoninthegrass", email = "4097471+pythoninthegrass@users.noreply.github.com" }
+]
+
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    "textual[syntax]>=5.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.11",
+    "textual-dev>=1.7.0",
+]

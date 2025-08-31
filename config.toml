@@ -1,0 +1,126 @@
+# Clair Obscur: Expedition 33 Configuration File
+# Performance presets and engine tweaks for Unreal Engine configuration
+
+[paths]
+# Default paths for different game versions
+steam_path = ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/1903340/pfx/drive_c/users/steamuser/Local Settings/Application Data/Sandfall/Saved/Config/Windows"
+gamepass_path = "AppData/Local/Packages/SandfallInteractiveInc.ClairObscurExpedition33_8wekyb3d8bbwe/LocalCache/Local/Sandfall/Saved/Config/Windows"
+
+[presets.low.SystemSettings]
+"r.ViewDistanceScale" = 0.5
+"r.ShadowQuality" = 0
+"r.PostProcessAAQuality" = 0
+"r.MotionBlurQuality" = 0
+"r.AmbientOcclusionLevels" = 0
+"r.SSR.Quality" = 0
+"r.RefractionQuality" = 0
+"r.MaxAnisotropy" = 4
+"r.LightFunctionQuality" = 0
+"r.ShadowFilterQualityBias" = -2
+"r.BloomQuality" = 0
+"r.FastBlurThreshold" = 0
+"r.Upscale.Quality" = 1
+"r.DefaultFeature.AntiAliasing" = 0
+"r.Lumen.GlobalIllumination" = "False"
+"r.Lumen.Reflections" = "False"
+"r.Lumen.ScreenProbeGather" = "False"
+"r.RayTracing" = "False"
+"r.RayTracing.Shadows" = "False"
+"r.RayTracing.Reflections" = "False"
+"r.RayTracing.GlobalIllumination" = "False"
+
+[presets.balanced.SystemSettings]
+"r.ViewDistanceScale" = 0.85
+"r.ShadowQuality" = 2
+"r.PostProcessAAQuality" = 2
+"r.MotionBlurQuality" = 1
+"r.AmbientOcclusionLevels" = 2
+"r.SSR.Quality" = 2
+"r.RefractionQuality" = 1
+"r.MaxAnisotropy" = 8
+"r.LightFunctionQuality" = 1
+"r.ShadowFilterQualityBias" = 0
+"r.BloomQuality" = 2
+"r.FastBlurThreshold" = 2
+"r.Upscale.Quality" = 2
+"r.DefaultFeature.AntiAliasing" = 2
+"r.Lumen.GlobalIllumination" = "True"
+"r.Lumen.Reflections" = "True"
+"r.Lumen.ScreenProbeGather" = "True"
+"r.Lumen.Reflections.HardwareRayTracing" = "False"
+"r.RayTracing" = "False"
+"r.RayTracing.Shadows" = "False"
+"r.RayTracing.Reflections" = "False"
+"r.RayTracing.GlobalIllumination" = "False"
+
+[presets.ultra.SystemSettings]
+"r.ViewDistanceScale" = 1.5
+"r.ShadowQuality" = 4
+"r.PostProcessAAQuality" = 4
+"r.MotionBlurQuality" = 4
+"r.AmbientOcclusionLevels" = 4
+"r.SSR.Quality" = 4
+"r.RefractionQuality" = 4
+"r.MaxAnisotropy" = 16
+"r.LightFunctionQuality" = 4
+"r.ShadowFilterQualityBias" = 2
+"r.BloomQuality" = 4
+"r.FastBlurThreshold" = 100
+"r.Upscale.Quality" = 4
+"r.DefaultFeature.AntiAliasing" = 4
+"r.Lumen.GlobalIllumination" = "True"
+"r.Lumen.Reflections" = "True"
+"r.Lumen.ScreenProbeGather" = "True"
+"r.Lumen.Reflections.HardwareRayTracing" = "True"
+"r.RayTracing" = "True"
+"r.RayTracing.Shadows" = "True"
+"r.RayTracing.Reflections" = "True"
+"r.RayTracing.GlobalIllumination" = "True"
+"r.RayTracing.AmbientOcclusion" = "True"
+
+[presets.sharp_clear.SystemSettings]
+"r.Tonemapper.GrainQuantization" = 0
+"r.Tonemapper.Quality" = 0
+"r.PostProcessAAQuality" = 0
+"r.AntiAliasingMethod" = 0
+"r.DefaultFeature.AntiAliasing" = 0
+"r.MotionBlurQuality" = 0
+"r.DepthOfFieldQuality" = 0
+"r.BloomQuality" = 0
+"r.LensFlareQuality" = 0
+"r.SceneColorFringeQuality" = 0
+"r.FilmGrain" = 0
+"r.Tonemapper.Sharpen" = 1.5
+"r.Upscale.Softness" = 0
+
+[presets.soft_ambient.SystemSettings]
+"r.BloomQuality" = 4
+"r.LensFlareQuality" = 4
+"r.SceneColorFringeQuality" = 2
+"r.FilmGrain" = 1
+"r.MotionBlurQuality" = 3
+"r.DepthOfFieldQuality" = 3
+"r.Tonemapper.Sharpen" = 0.5
+"r.Upscale.Softness" = 2
+"r.Tonemapper.GrainQuantization" = 1
+"r.AmbientOcclusionLevels" = 4
+"r.SSR.Quality" = 3
+"r.Lumen.GlobalIllumination" = "True"
+"r.Lumen.Reflections" = "True"
+
+[engine_tweaks]
+
+[engine_tweaks."/Script/Engine.Engine"]
+bSmoothFrameRate = "False"
+bUseFixedFrameRate = "False"
+SmoothedFrameRateRange = "(LowerBound=(Type=Inclusive,Value=30.000000),UpperBound=(Type=Exclusive,Value=120.000000))"
+MinDesiredFrameRate = 30
+
+[engine_tweaks."/Script/Engine.RendererSettings"]
+"r.AntiAliasingMethod" = 0
+"r.MSAACount" = 1
+"r.DefaultFeature.AntiAliasing" = 0
+"r.DefaultFeature.AutoExposure.ExtendDefaultLuminanceRange" = "True"
+
+[engine_tweaks."/Script/Engine.NetworkSettings"]
+"n.VerifyPeer" = "False"
