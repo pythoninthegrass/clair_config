@@ -156,40 +156,6 @@ class ClairObscurConfig:
 class ConfigOption(Container):
     """A configuration option widget with label and control."""
 
-    DEFAULT_CSS = """
-    ConfigOption {
-        layout: horizontal;
-        height: 3;
-        padding: 0 1;
-        margin: 0;
-        align: left middle;
-    }
-
-    ConfigOption Label {
-        width: 40%;
-        min-width: 18;
-        max-width: 25;
-        text-align: right;
-        margin-right: 1;
-    }
-
-    ConfigOption Select {
-        width: 45%;
-        min-width: 15;
-        max-width: 30;
-    }
-
-    ConfigOption Input {
-        width: 45%;
-        min-width: 10;
-        max-width: 20;
-        height: 1;
-    }
-
-    ConfigOption Switch {
-        width: auto;
-    }
-    """
 
     def __init__(self, label: str, control_type: str = "select",
                  options: list = None, value: str = "", **kwargs):
@@ -217,25 +183,6 @@ class ConfigOption(Container):
 class GameVersionSection(Container):
     """Game version selection section."""
 
-    DEFAULT_CSS = """
-    GameVersionSection {
-        background: $surface;
-        border: tall $primary-background;
-        padding: 1;
-        margin: 1;
-        height: auto;
-        min-height: 8;
-    }
-
-    GameVersionSection Static {
-        text-style: bold;
-        margin-bottom: 1;
-    }
-
-    GameVersionSection RadioSet {
-        margin-left: 2;
-    }
-    """
 
     def compose(self) -> ComposeResult:
         yield Static("Game Version")
@@ -247,20 +194,6 @@ class GameVersionSection(Container):
 class GraphicsSection(Container):
     """Graphics configuration section."""
 
-    DEFAULT_CSS = """
-    GraphicsSection {
-        background: $surface;
-        border: tall $primary-background;
-        padding: 1;
-        margin: 1;
-        height: auto;
-    }
-
-    GraphicsSection Static {
-        text-style: bold;
-        margin-bottom: 1;
-    }
-    """
 
     def compose(self) -> ComposeResult:
         yield Static("Graphics Configuration")
@@ -302,63 +235,6 @@ class GraphicsSection(Container):
 class PresetSection(Container):
     """Preset buttons section."""
 
-    DEFAULT_CSS = """
-    PresetSection {
-        background: $surface;
-        border: tall $primary-background;
-        padding: 1 1 0 1;
-        margin: 1 1 0 1;
-        height: auto;
-    }
-
-    PresetSection Static {
-        text-style: bold;
-        margin-bottom: 0;
-    }
-
-    PresetSection Grid {
-        layout: grid;
-        grid-size: 2;
-        grid-columns: 1fr 1fr;
-        grid-gutter: 1 0;
-        margin: 0;
-    }
-
-    PresetSection Button {
-        width: 100%;
-        height: 3;
-    }
-
-    .preset-low {
-        background: rgb(150, 80, 80);
-        color: white;
-    }
-
-    .preset-balanced {
-        background: rgb(80, 150, 80);
-        color: white;
-    }
-
-    .preset-ultra {
-        background: rgb(80, 80, 200);
-        color: white;
-    }
-
-    .preset-sharp {
-        background: rgb(200, 150, 50);
-        color: white;
-    }
-
-    .preset-soft {
-        background: rgb(150, 80, 200);
-        color: white;
-    }
-
-    .preset-custom {
-        background: rgb(120, 120, 120);
-        color: white;
-    }
-    """
 
     def compose(self) -> ComposeResult:
         yield Static("Performance Presets")
@@ -375,41 +251,6 @@ class PresetSection(Container):
 class AdvancedSection(Container):
     """Advanced options section."""
 
-    DEFAULT_CSS = """
-    AdvancedSection {
-        background: $surface;
-        border: tall $primary-background;
-        padding: 0 1;
-        margin: 0 1 1 1;
-        height: auto;
-    }
-
-    AdvancedSection Static {
-        text-style: bold;
-        margin-bottom: 0;
-        padding: 1 0 0 0;
-    }
-
-    AdvancedSection RadioSet {
-        margin-left: 2;
-        margin-bottom: 1;
-        padding: 0;
-    }
-
-    AdvancedSection Grid {
-        layout: grid;
-        grid-size: 2;
-        grid-columns: 1fr 1fr;
-        grid-gutter: 1;
-        margin: 0;
-        padding: 1 0;
-    }
-
-    AdvancedSection .advanced-column {
-        layout: vertical;
-        height: auto;
-    }
-    """
 
     def compose(self) -> ComposeResult:
         yield Static("Advanced Options")
@@ -446,111 +287,7 @@ class ClairConfigTUI(App):
 
     TITLE = "Clair Obscur: Expedition 33 - Unreal Config v2.0"
 
-    CSS = """
-    Screen {
-        background: $background;
-    }
-
-    #main-container {
-        layout: grid;
-        grid-size: 2;
-        grid-columns: 1fr 1fr;
-        height: 1fr;
-        margin: 0;
-        padding: 0;
-    }
-
-    #left-column {
-        layout: vertical;
-        overflow: auto auto;
-        min-height: 100%;
-    }
-
-    #right-column {
-        layout: vertical;
-        overflow: auto auto;
-        min-height: 100%;
-    }
-
-    #button-bar {
-        dock: bottom;
-        height: auto;
-        min-height: 3;
-        background: $surface;
-        border-top: tall $primary-background;
-        padding: 1;
-    }
-
-    #button-grid {
-        layout: grid;
-        grid-size: 5;
-        grid-columns: 1fr 1fr 1fr 1fr 1fr;
-        grid-gutter: 1;
-        height: auto;
-        align: center middle;
-    }
-
-    #button-grid Button {
-        width: 100%;
-        min-width: 12;
-        height: 3;
-    }
-
-
-    #save-btn {
-        background: rgb(80, 80, 90);
-        color: white;
-    }
-
-    #save-btn:hover {
-        background: rgb(100, 100, 110);
-    }
-
-    #reload-btn {
-        background: rgb(220, 80, 60);
-        color: white;
-    }
-
-    #reload-btn:hover {
-        background: rgb(240, 100, 80);
-    }
-
-    #launch-btn {
-        background: rgb(255, 165, 0);
-        color: black;
-    }
-
-    #launch-btn:hover {
-        background: rgb(255, 185, 40);
-    }
-
-    #palette-btn {
-        background: rgb(100, 180, 100);
-        color: white;
-    }
-
-    #palette-btn:hover {
-        background: rgb(120, 200, 120);
-    }
-
-    #exit-btn {
-        background: rgb(80, 150, 200);
-        color: white;
-    }
-
-    #exit-btn:hover {
-        background: rgb(100, 170, 220);
-    }
-
-    Header {
-        background: rgb(20, 20, 30);
-        color: $text;
-    }
-
-    Footer {
-        background: rgb(20, 20, 30);
-    }
-    """
+    CSS_PATH = "static/styles.tcss"
 
     BINDINGS = [
         Binding("ctrl+s", "save_changes", "Save Changes"),
