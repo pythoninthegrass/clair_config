@@ -1,7 +1,7 @@
 /* ConfigOption styles */
 ConfigOption {
     layout: horizontal;
-    height: 3;
+    height: 2;
     padding: 0 1;
     margin: 0;
     align: left middle;
@@ -36,10 +36,10 @@ ConfigOption Switch {
 GameVersionSection {
     background: $surface;
     border: tall $primary-background;
-    padding: 1;
-    margin: 1;
+    padding: 0 1 0 1;
+    margin: 1 1 0 1;
     height: auto;
-    min-height: 8;
+    min-height: 6;
 }
 
 GameVersionSection Static {
@@ -55,8 +55,8 @@ GameVersionSection RadioSet {
 GraphicsSection {
     background: $surface;
     border: tall $primary-background;
-    padding: 1;
-    margin: 1;
+    padding: 0 1 0 1;
+    margin: 0 1 1 1;
     height: auto;
 }
 
@@ -83,13 +83,14 @@ PresetSection Grid {
     layout: grid;
     grid-size: 2;
     grid-columns: 1fr 1fr;
-    grid-gutter: 1 0;
+    grid-gutter: 0;
     margin: 0;
 }
 
 PresetSection Button {
     width: 100%;
     height: 3;
+    margin: 0 1 0 0;
 }
 
 .preset-low {
@@ -126,14 +127,14 @@ PresetSection Button {
 AdvancedSection {
     background: $surface;
     border: tall $primary-background;
-    padding: 0 1;
+    padding: 0 1 0 1;
     margin: 0 1 1 1;
     height: auto;
 }
 
 AdvancedSection Static {
     text-style: bold;
-    margin-bottom: 0;
+    margin-bottom: 1;
     padding: 1 0 0 0;
 }
 
@@ -147,14 +148,15 @@ AdvancedSection Grid {
     layout: grid;
     grid-size: 2;
     grid-columns: 1fr 1fr;
-    grid-gutter: 1;
+    grid-gutter: 1 0;
     margin: 0;
-    padding: 1 0;
+    padding: 0;
 }
 
 AdvancedSection .advanced-column {
     layout: vertical;
     height: auto;
+    margin: 0;
 }
 
 /* Main App styles */
