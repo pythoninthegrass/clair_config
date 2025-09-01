@@ -12,37 +12,23 @@ class ThemeConfig:
     """Theme configuration using attrs and decouple."""
 
     # Theme mode from environment or default to DARK
-    mode: str = attrs.field(
-        factory=lambda: config("THEME_MODE", default="DARK")
-    )
+    mode: str = attrs.field(factory=lambda: config("THEME_MODE", default="DARK"))
 
     # Window dimensions from environment with defaults - optimized for nearest neighbor scaling
-    height: int = attrs.field(
-        factory=lambda: config("GUI_HEIGHT", default=1075, cast=int)
-    )
+    height: int = attrs.field(factory=lambda: config("GUI_HEIGHT", default=1075, cast=int))
 
-    width: int = attrs.field(
-        factory=lambda: config("GUI_WIDTH", default=1100, cast=int)
-    )
+    width: int = attrs.field(factory=lambda: config("GUI_WIDTH", default=1100, cast=int))
 
     # TODO: set to false
     # Window resizable setting
-    resizable: bool = attrs.field(
-        factory=lambda: config("GUI_RESIZABLE", default=True, cast=bool)
-    )
+    resizable: bool = attrs.field(factory=lambda: config("GUI_RESIZABLE", default=True, cast=bool))
 
     # App title from environment with default
-    title: str = attrs.field(
-        factory=lambda: config("APP_TITLE", default="Clair Obscur: Expedition 33 - Unreal Config")
-    )
+    title: str = attrs.field(factory=lambda: config("APP_TITLE", default="Clair Obscur: Expedition 33 - Unreal Config"))
 
     def get_flet_theme_mode(self) -> ft.ThemeMode:
         """Convert string theme mode to Flet ThemeMode enum."""
-        theme_map = {
-            "DARK": ft.ThemeMode.DARK,
-            "LIGHT": ft.ThemeMode.LIGHT,
-            "SYSTEM": ft.ThemeMode.SYSTEM
-        }
+        theme_map = {"DARK": ft.ThemeMode.DARK, "LIGHT": ft.ThemeMode.LIGHT, "SYSTEM": ft.ThemeMode.SYSTEM}
         return theme_map.get(self.mode.upper(), ft.ThemeMode.DARK)
 
     def toggle_mode(self) -> str:
@@ -58,6 +44,7 @@ class ThemeConfig:
 THEME = config("THEME", default="DARK")
 GUI_WIDTH = config("GUI_WIDTH", default=1200, cast=int)
 GUI_HEIGHT = config("GUI_HEIGHT", default=800, cast=int)
+
 
 class ClairConfigFlet:
     """Main Flet application for Clair Obscur configuration."""
@@ -97,37 +84,47 @@ class ClairConfigFlet:
     def build_ui(self) -> ft.Container:
         """Build the main UI inspired by the game interface."""
         return ft.Container(
-            content=ft.Column([
-                # Header section - compact
-                self.build_header(),
-
-                # Main content area - tight layout at top
-                ft.Row([
-                    # Left column - Game Version & Graphics
-                    ft.Container(
-                        content=ft.Column([
-                            self.build_game_version_section(),
-                            self.build_graphics_section(),
-                        ], tight=True),
-                        width=420,
-                        padding=ft.padding.all(10),
+            content=ft.Column(
+                [
+                    # Header section - compact
+                    self.build_header(),
+                    # Main content area - tight layout at top
+                    ft.Row(
+                        [
+                            # Left column - Game Version & Graphics
+                            ft.Container(
+                                content=ft.Column(
+                                    [
+                                        self.build_game_version_section(),
+                                        self.build_graphics_section(),
+                                    ],
+                                    tight=True,
+                                ),
+                                width=420,
+                                padding=ft.padding.all(10),
+                            ),
+                            # Right column - Presets & Advanced Options
+                            ft.Container(
+                                content=ft.Column(
+                                    [
+                                        self.build_preset_section(),
+                                        self.build_advanced_section(),
+                                    ],
+                                    tight=True,
+                                ),
+                                width=640,
+                                padding=ft.padding.all(10),
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        vertical_alignment=ft.CrossAxisAlignment.START,
                     ),
-
-                    # Right column - Presets & Advanced Options
-                    ft.Container(
-                        content=ft.Column([
-                            self.build_preset_section(),
-                            self.build_advanced_section(),
-                        ], tight=True),
-                        width=640,
-                        padding=ft.padding.all(10),
-                    ),
-                ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.START),
-
-                # Bottom button bar - positioned at bottom
-                ft.Container(expand=True),  # Flexible spacer
-                self.build_button_bar(),
-            ], spacing=5),
+                    # Bottom button bar - positioned at bottom
+                    ft.Container(expand=True),  # Flexible spacer
+                    self.build_button_bar(),
+                ],
+                spacing=5,
+            ),
             bgcolor=ft.Colors.BLUE_GREY_900,
             expand=True,
         )
@@ -135,22 +132,27 @@ class ClairConfigFlet:
     def build_header(self) -> ft.Container:
         """Build the header section similar to the game's title area."""
         return ft.Container(
-            content=ft.Column([
-                ft.Text(
-                    "CLAIR OBSCUR",
-                    size=24,
-                    weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.AMBER_300,
-                    text_align=ft.TextAlign.CENTER,
-                ),
-                ft.Text(
-                    "EXPEDITION 33",
-                    size=18,
-                    weight=ft.FontWeight.W_400,
-                    color=ft.Colors.AMBER_200,
-                    text_align=ft.TextAlign.CENTER,
-                ),
-            ], tight=True, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=2),
+            content=ft.Column(
+                [
+                    ft.Text(
+                        "CLAIR OBSCUR",
+                        size=24,
+                        weight=ft.FontWeight.BOLD,
+                        color=ft.Colors.AMBER_300,
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+                    ft.Text(
+                        "EXPEDITION 33",
+                        size=18,
+                        weight=ft.FontWeight.W_400,
+                        color=ft.Colors.AMBER_200,
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+                ],
+                tight=True,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=2,
+            ),
             padding=ft.padding.symmetric(vertical=12, horizontal=15),
             bgcolor=ft.Colors.BLACK54,
             alignment=ft.alignment.center,
@@ -159,20 +161,26 @@ class ClairConfigFlet:
     def build_game_version_section(self) -> ft.Container:
         """Build game version selection section."""
         self.game_version_radio = ft.RadioGroup(
-            content=ft.Column([
-                ft.Radio(value="steam", label="Steam Version"),
-                ft.Radio(value="gamepass", label="GamePass Version"),
-            ]),
+            content=ft.Column(
+                [
+                    ft.Radio(value="steam", label="Steam Version"),
+                    ft.Radio(value="gamepass", label="GamePass Version"),
+                ]
+            ),
             value=self.game_version,
             on_change=self.on_game_version_changed,
         )
 
         return ft.Container(
-            content=ft.Column([
-                ft.Text("Game Version", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
-                ft.Divider(color=ft.Colors.WHITE24, height=1),
-                self.game_version_radio,
-            ], tight=True, spacing=5),
+            content=ft.Column(
+                [
+                    ft.Text("Game Version", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
+                    ft.Divider(color=ft.Colors.WHITE24, height=1),
+                    self.game_version_radio,
+                ],
+                tight=True,
+                spacing=5,
+            ),
             bgcolor=ft.Colors.BLUE_GREY_800,
             padding=ft.padding.all(12),
             border_radius=ft.border_radius.all(8),
@@ -182,30 +190,26 @@ class ClairConfigFlet:
     def build_graphics_section(self) -> ft.Container:
         """Build graphics configuration section."""
         graphics_controls = [
-            self.create_dropdown_option("Anisotropic Filtering",
-                                      ["Disabled", "2x", "4x", "8x", "16x"], "Enabled"),
-            self.create_dropdown_option("Depth of Field",
-                                      ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "Ultra"),
-            self.create_dropdown_option("Bloom",
-                                      ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "Very High"),
-            self.create_dropdown_option("Motion Blur",
-                                      ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "High"),
-            self.create_dropdown_option("Lens Flares",
-                                      ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "High"),
-            self.create_dropdown_option("Shadow Quality",
-                                      ["Low", "Medium", "High", "Ultra"], "Ultra"),
-            self.create_dropdown_option("Shadow Resolution",
-                                      ["4096x4096", "2048x2048", "1024x1024"], "4096x4096"),
-            self.create_dropdown_option("Film Grain",
-                                      ["Disabled", "Enabled"], "Enabled"),
+            self.create_dropdown_option("Anisotropic Filtering", ["Disabled", "2x", "4x", "8x", "16x"], "Enabled"),
+            self.create_dropdown_option("Depth of Field", ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "Ultra"),
+            self.create_dropdown_option("Bloom", ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "Very High"),
+            self.create_dropdown_option("Motion Blur", ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "High"),
+            self.create_dropdown_option("Lens Flares", ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"], "High"),
+            self.create_dropdown_option("Shadow Quality", ["Low", "Medium", "High", "Ultra"], "Ultra"),
+            self.create_dropdown_option("Shadow Resolution", ["4096x4096", "2048x2048", "1024x1024"], "4096x4096"),
+            self.create_dropdown_option("Film Grain", ["Disabled", "Enabled"], "Enabled"),
         ]
 
         return ft.Container(
-            content=ft.Column([
-                ft.Text("Graphics Configuration", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
-                ft.Divider(color=ft.Colors.WHITE24, height=1),
-                ft.Column(graphics_controls, spacing=6, tight=True),
-            ], tight=True, spacing=5),
+            content=ft.Column(
+                [
+                    ft.Text("Graphics Configuration", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
+                    ft.Divider(color=ft.Colors.WHITE24, height=1),
+                    ft.Column(graphics_controls, spacing=6, tight=True),
+                ],
+                tight=True,
+                spacing=5,
+            ),
             bgcolor=ft.Colors.BLUE_GREY_800,
             padding=ft.padding.all(12),
             border_radius=ft.border_radius.all(8),
@@ -255,12 +259,7 @@ class ClairConfigFlet:
             ),
             ft.Container(
                 content=ft.ElevatedButton(
-                    content=ft.Text(
-                        "Sharp &\nClear",
-                        text_align=ft.TextAlign.CENTER,
-                        size=12,
-                        color=ft.Colors.WHITE
-                    ),
+                    content=ft.Text("Sharp &\nClear", text_align=ft.TextAlign.CENTER, size=12, color=ft.Colors.WHITE),
                     on_click=lambda _: self.apply_preset("sharp_clear"),
                     style=ft.ButtonStyle(
                         bgcolor={ft.ControlState.DEFAULT: ft.Colors.BLUE_700},
@@ -273,12 +272,7 @@ class ClairConfigFlet:
             ),
             ft.Container(
                 content=ft.ElevatedButton(
-                    content=ft.Text(
-                        "Soft &\nAmbient",
-                        text_align=ft.TextAlign.CENTER,
-                        size=12,
-                        color=ft.Colors.WHITE
-                    ),
+                    content=ft.Text("Soft &\nAmbient", text_align=ft.TextAlign.CENTER, size=12, color=ft.Colors.WHITE),
                     on_click=lambda _: self.apply_preset("soft_ambient"),
                     style=ft.ButtonStyle(
                         bgcolor={ft.ControlState.DEFAULT: ft.Colors.PURPLE_700},
@@ -305,14 +299,21 @@ class ClairConfigFlet:
         ]
 
         return ft.Container(
-            content=ft.Column([
-                ft.Text("Performance Presets", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
-                ft.Divider(color=ft.Colors.WHITE24, height=1),
-                ft.Row([
-                    ft.Column([preset_buttons[0], preset_buttons[1], preset_buttons[2]], spacing=5),
-                    ft.Column([preset_buttons[3], preset_buttons[4], preset_buttons[5]], spacing=5),
-                ], alignment=ft.MainAxisAlignment.SPACE_AROUND),
-            ], tight=True, spacing=5),
+            content=ft.Column(
+                [
+                    ft.Text("Performance Presets", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
+                    ft.Divider(color=ft.Colors.WHITE24, height=1),
+                    ft.Row(
+                        [
+                            ft.Column([preset_buttons[0], preset_buttons[1], preset_buttons[2]], spacing=5),
+                            ft.Column([preset_buttons[3], preset_buttons[4], preset_buttons[5]], spacing=5),
+                        ],
+                        alignment=ft.MainAxisAlignment.SPACE_AROUND,
+                    ),
+                ],
+                tight=True,
+                spacing=5,
+            ),
             bgcolor=ft.Colors.BLUE_GREY_800,
             padding=ft.padding.all(12),
             border_radius=ft.border_radius.all(8),
@@ -334,11 +335,15 @@ class ClairConfigFlet:
         ]
 
         return ft.Container(
-            content=ft.Column([
-                ft.Text("Advanced Options", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
-                ft.Divider(color=ft.Colors.WHITE24, height=1),
-                ft.Column(advanced_controls, spacing=6, tight=True),
-            ], tight=True, spacing=5),
+            content=ft.Column(
+                [
+                    ft.Text("Advanced Options", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
+                    ft.Divider(color=ft.Colors.WHITE24, height=1),
+                    ft.Column(advanced_controls, spacing=6, tight=True),
+                ],
+                tight=True,
+                spacing=5,
+            ),
             bgcolor=ft.Colors.BLUE_GREY_800,
             padding=ft.padding.all(12),
             border_radius=ft.border_radius.all(8),
@@ -347,71 +352,80 @@ class ClairConfigFlet:
     def build_button_bar(self) -> ft.Container:
         """Build bottom button bar with version info."""
         return ft.Container(
-            content=ft.Column([
-                # Centered buttons row
-                ft.Row([
-                    ft.ElevatedButton(
-                        text="Save & Exit",
-                        on_click=self.save_and_exit,
-                        style=ft.ButtonStyle(
-                            bgcolor={ft.ControlState.DEFAULT: ft.Colors.GREEN_600},
-                            color=ft.Colors.WHITE,
-                        ),
-                        width=120,
-                        height=40,
+            content=ft.Column(
+                [
+                    # Centered buttons row
+                    ft.Row(
+                        [
+                            ft.ElevatedButton(
+                                text="Save & Exit",
+                                on_click=self.save_and_exit,
+                                style=ft.ButtonStyle(
+                                    bgcolor={ft.ControlState.DEFAULT: ft.Colors.GREEN_600},
+                                    color=ft.Colors.WHITE,
+                                ),
+                                width=120,
+                                height=40,
+                            ),
+                            ft.ElevatedButton(
+                                text="Save Changes",
+                                on_click=self.save_changes,
+                                style=ft.ButtonStyle(
+                                    bgcolor={ft.ControlState.DEFAULT: ft.Colors.BLUE_600},
+                                    color=ft.Colors.WHITE,
+                                ),
+                                width=120,
+                                height=40,
+                            ),
+                            ft.ElevatedButton(
+                                text="Reload Config",
+                                on_click=self.reload_config,
+                                style=ft.ButtonStyle(
+                                    bgcolor={ft.ControlState.DEFAULT: ft.Colors.ORANGE_600},
+                                    color=ft.Colors.WHITE,
+                                ),
+                                width=120,
+                                height=40,
+                            ),
+                            ft.ElevatedButton(
+                                text="Launch Game",
+                                on_click=self.launch_game,
+                                style=ft.ButtonStyle(
+                                    bgcolor={ft.ControlState.DEFAULT: ft.Colors.PURPLE_600},
+                                    color=ft.Colors.WHITE,
+                                ),
+                                width=120,
+                                height=40,
+                            ),
+                            ft.ElevatedButton(
+                                text="Toggle Theme",
+                                on_click=self.toggle_theme,
+                                style=ft.ButtonStyle(
+                                    bgcolor={ft.ControlState.DEFAULT: ft.Colors.GREY_600},
+                                    color=ft.Colors.WHITE,
+                                ),
+                                width=120,
+                                height=40,
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        spacing=10,
                     ),
-                    ft.ElevatedButton(
-                        text="Save Changes",
-                        on_click=self.save_changes,
-                        style=ft.ButtonStyle(
-                            bgcolor={ft.ControlState.DEFAULT: ft.Colors.BLUE_600},
-                            color=ft.Colors.WHITE,
-                        ),
-                        width=120,
-                        height=40,
+                    # Version info row positioned at bottom right
+                    ft.Row(
+                        [
+                            ft.Container(expand=True),  # Push version to right
+                            ft.Text(
+                                f"Unreal Config v{get_version()}",
+                                size=12,
+                                color=ft.Colors.WHITE70,
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.END,
                     ),
-                    ft.ElevatedButton(
-                        text="Reload Config",
-                        on_click=self.reload_config,
-                        style=ft.ButtonStyle(
-                            bgcolor={ft.ControlState.DEFAULT: ft.Colors.ORANGE_600},
-                            color=ft.Colors.WHITE,
-                        ),
-                        width=120,
-                        height=40,
-                    ),
-                    ft.ElevatedButton(
-                        text="Launch Game",
-                        on_click=self.launch_game,
-                        style=ft.ButtonStyle(
-                            bgcolor={ft.ControlState.DEFAULT: ft.Colors.PURPLE_600},
-                            color=ft.Colors.WHITE,
-                        ),
-                        width=120,
-                        height=40,
-                    ),
-                    ft.ElevatedButton(
-                        text="Toggle Theme",
-                        on_click=self.toggle_theme,
-                        style=ft.ButtonStyle(
-                            bgcolor={ft.ControlState.DEFAULT: ft.Colors.GREY_600},
-                            color=ft.Colors.WHITE,
-                        ),
-                        width=120,
-                        height=40,
-                    ),
-                ], alignment=ft.MainAxisAlignment.CENTER, spacing=10),
-                
-                # Version info row positioned at bottom right
-                ft.Row([
-                    ft.Container(expand=True),  # Push version to right
-                    ft.Text(
-                        f"Unreal Config v{get_version()}",
-                        size=12,
-                        color=ft.Colors.WHITE70,
-                    ),
-                ], alignment=ft.MainAxisAlignment.END),
-            ], spacing=5),
+                ],
+                spacing=5,
+            ),
             padding=ft.padding.all(20),
             bgcolor=ft.Colors.BLACK54,
         )
@@ -426,15 +440,17 @@ class ClairConfigFlet:
         self.config_controls[label] = dropdown
 
         return ft.Container(
-            content=ft.Row([
-                ft.Text(label, size=14, color=ft.Colors.WHITE, width=150),
-                dropdown,
-            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+            content=ft.Row(
+                [
+                    ft.Text(label, size=14, color=ft.Colors.WHITE, width=150),
+                    dropdown,
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            ),
             padding=ft.padding.symmetric(vertical=5),
         )
 
-    def create_slider_option(self, label: str, min_val: float, max_val: float,
-                           default: float, step: float) -> ft.Container:
+    def create_slider_option(self, label: str, min_val: float, max_val: float, default: float, step: float) -> ft.Container:
         """Create a slider configuration option."""
         slider_text = ft.Text(str(default), size=14, color=ft.Colors.WHITE, width=50)
 
@@ -454,11 +470,14 @@ class ClairConfigFlet:
         self.config_controls[label] = slider
 
         return ft.Container(
-            content=ft.Row([
-                ft.Text(label, size=14, color=ft.Colors.WHITE, width=150),
-                slider,
-                slider_text,
-            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+            content=ft.Row(
+                [
+                    ft.Text(label, size=14, color=ft.Colors.WHITE, width=150),
+                    slider,
+                    slider_text,
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            ),
             padding=ft.padding.symmetric(vertical=5),
         )
 
@@ -468,10 +487,13 @@ class ClairConfigFlet:
         self.config_controls[label] = switch
 
         return ft.Container(
-            content=ft.Row([
-                ft.Text(label, size=14, color=ft.Colors.WHITE, width=200),
-                switch,
-            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+            content=ft.Row(
+                [
+                    ft.Text(label, size=14, color=ft.Colors.WHITE, width=200),
+                    switch,
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            ),
             padding=ft.padding.symmetric(vertical=5),
         )
 
@@ -489,10 +511,22 @@ class ClairConfigFlet:
             # Update UI controls with preset values
             mappings = {
                 "r.MaxAnisotropy": ("Anisotropic Filtering", lambda x: f"{x}x" if x != "0" else "Disabled"),
-                "r.DepthOfFieldQuality": ("Depth of Field", lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)]),
-                "r.BloomQuality": ("Bloom", lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)]),
-                "r.MotionBlurQuality": ("Motion Blur", lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)]),
-                "r.LensFlareQuality": ("Lens Flares", lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)]),
+                "r.DepthOfFieldQuality": (
+                    "Depth of Field",
+                    lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)],
+                ),
+                "r.BloomQuality": (
+                    "Bloom",
+                    lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)],
+                ),
+                "r.MotionBlurQuality": (
+                    "Motion Blur",
+                    lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)],
+                ),
+                "r.LensFlareQuality": (
+                    "Lens Flares",
+                    lambda x: ["Disabled", "Low", "Medium", "High", "Very High", "Ultra"][min(int(x), 5)],
+                ),
                 "r.ShadowQuality": ("Shadow Quality", lambda x: ["Low", "Medium", "High", "Ultra"][min(int(x), 3)]),
                 "r.FilmGrain": ("Film Grain", lambda x: "Enabled" if x != "0" else "Disabled"),
                 "r.Fog": ("Fog", lambda x: x.lower() == "true"),
@@ -547,9 +581,17 @@ class ClairConfigFlet:
                     value = control.value
                     # Convert UI values to config values
                     quality_map = {
-                        "Disabled": "0", "Low": "1", "Medium": "2", "High": "3",
-                        "Very High": "4", "Ultra": "5", "2x": "2", "4x": "4",
-                        "8x": "8", "16x": "16", "Enabled": "1"
+                        "Disabled": "0",
+                        "Low": "1",
+                        "Medium": "2",
+                        "High": "3",
+                        "Very High": "4",
+                        "Ultra": "5",
+                        "2x": "2",
+                        "4x": "4",
+                        "8x": "8",
+                        "16x": "16",
+                        "Enabled": "1",
                     }
                     value = quality_map.get(value, value)
                 elif isinstance(control, ft.Slider):
