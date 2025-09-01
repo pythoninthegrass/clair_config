@@ -9,12 +9,12 @@ Main orchestration layer for the terminal user interface / command line tool.
 import argparse
 import sys
 from core.backend import ClairObscurConfig
-from core.frontend import ClairConfigTUI
+from core.frontend import run_flet_app
 from pathlib import Path
 
 
 def main():
-    """Main CLI interface with TUI and CLI modes."""
+    """Main CLI interface with Flet GUI and CLI modes."""
     parser = argparse.ArgumentParser(description="Clair Obscur: Expedition 33 Configuration Tool")
 
     parser.add_argument(
@@ -60,10 +60,9 @@ def main():
     args = parser.parse_args()
 
     try:
-        # If no command is specified, launch TUI
+        # If no command is specified, launch Flet GUI
         if not args.command:
-            app = ClairConfigTUI(config_path=args.config_path, game_version=args.game_version)
-            app.run()
+            run_flet_app(config_path=args.config_path, game_version=args.game_version)
         else:
             # CLI mode - execute command directly
             config_manager = ClairObscurConfig(config_path=args.config_path, game_version=args.game_version)
