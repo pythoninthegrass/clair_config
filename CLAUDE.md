@@ -106,3 +106,11 @@ Active development focuses on:
 - Backend refactoring to reduce complexity (currently 782 LOC target < 500 LOC)
 - Enhanced preset management and configuration validation
 - Progressive Web App (PWA) capabilities for web deployment
+
+## Context
+
+- Context7 mcp libraries
+  - astral-sh/uv
+  - astral-sh/ruff
+  - flet-dev/flet
+  - taskfile_dev
