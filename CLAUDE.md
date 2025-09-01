@@ -3,8 +3,8 @@
 - NEVER run main.py without using `textual`
 
 ```bash
-# run with live reload
-textual run --dev main.py
+# run with live reload (no mouse to avoid cursor issues in Claude)
+textual run --dev --no-mouse main.py
 
 # watch logs in second terminal
 textual console
