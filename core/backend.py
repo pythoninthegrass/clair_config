@@ -12,6 +12,19 @@ from pathlib import Path
 from typing import Any, Optional
 
 
+def get_version():
+    """Get version from pyproject.toml"""
+    toml_load = tomllib.load
+    open_mode = 'rb'
+
+    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
+    if pyproject_path.exists():
+        with open(pyproject_path, open_mode) as f:
+            data = toml_load(f)
+            return data.get("project", {}).get("version", "unknown")
+    return "unknown"
+
+
 class ClairObscurConfig:
     """Manage Engine.ini configurations for Clair Obscur: Expedition 33."""
 
@@ -134,4 +147,3 @@ class ClairObscurConfig:
             print(f"\n[{section}]")
             for key, value in config[section].items():
                 print(f"{key}={value}")
-

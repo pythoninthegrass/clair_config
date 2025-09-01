@@ -2,24 +2,10 @@
 
 import attrs
 import flet as ft
-from core.backend import ClairObscurConfig
+from core.backend import ClairObscurConfig, get_version
 from decouple import config
 from pathlib import Path
 
-
-def get_version():
-    """Get version from pyproject.toml"""
-    import tomllib
-
-    toml_load = tomllib.load
-    open_mode = 'rb'
-
-    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
-    if pyproject_path.exists():
-        with open(pyproject_path, open_mode) as f:
-            data = toml_load(f)
-            return data.get("project", {}).get("version", "unknown")
-    return "unknown"
 
 @attrs.define
 class ThemeConfig:
