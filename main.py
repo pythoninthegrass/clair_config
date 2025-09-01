@@ -1,13 +1,4 @@
-#!/usr/bin/env -S uv run --script
-
-# /// script
-# requires-python = ">=3.12,<3.13"
-# dependencies = [
-#     "textual>=5.3.0",
-# ]
-# [tool.uv]
-# exclude-newer = "2025-08-31T00:00:00Z"
-# ///
+#!/usr/bin/env python
 
 """
 Clair Obscur: Expedition 33 - Configuration
