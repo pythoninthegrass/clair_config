@@ -1,6 +1,6 @@
 ---
 id: task-002
-title: Refactor clair_config.py to reduce LOC from 782 to under 500
+title: Refactor main.py to reduce LOC from 782 to under 500
 status: To Do
 assignee: []
 created_date: '2025-08-31 06:44'
